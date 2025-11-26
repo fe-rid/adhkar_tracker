@@ -6,6 +6,7 @@ What changed
 - Fixed date formatting in the History screen by importing `package:intl/intl.dart` and removing an incorrect getter (`lib/screens/history_screen.dart`).
 - Adjusted reset behavior in `StorageService.resetToday()` to remove today's key from storage rather than setting it to 0. This prevents zero-valued entries from appearing in history (`lib/services/storage_service.dart`).
 - Added `intl` dependency to `pubspec.yaml` so `DateFormat` works.
+- Added a `HomeScreen` with a bottom navigation bar and floating action button and set it as app home. (`lib/screens/home_screen.dart`, `lib/main.dart`)
 
 How to test
 

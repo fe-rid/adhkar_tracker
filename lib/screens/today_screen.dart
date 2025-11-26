@@ -3,7 +3,6 @@ import '../services/hadith_service.dart';
 import '../services/storage_service.dart';
 import '../models/hadith.dart';
 import '../widgets/adhkar_card.dart';
-import 'history_screen.dart';
 
 class TodayScreen extends StatefulWidget {
   @override
@@ -47,17 +46,6 @@ class _TodayScreenState extends State<TodayScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Today', style: titleStyle),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.history),
-            tooltip: 'History',
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => HistoryScreen()),
-              );
-            },
-          ),
-        ],
         centerTitle: true,
       ),
       body: _loading
