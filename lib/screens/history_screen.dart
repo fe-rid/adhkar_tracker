@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../services/storage_service.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -10,8 +11,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   final StorageService _storage = StorageService();
   Map<String, int> _history = {};
   bool _loading = true;
-
-  get DateFormat => null;
 
   @override
   void initState() {
@@ -47,20 +46,22 @@ class _HistoryScreenState extends State<HistoryScreen> {
       body: _loading
           ? Center(child: CircularProgressIndicator())
           : _history.isEmpty
-          ? Center(child: Text('No history yet. Go to Today and start counting.'))
-          : ListView.builder(
-        padding: EdgeInsets.symmetric(vertical: 12),
-        itemCount: _history.length,
-        itemBuilder: (context, index) {
-          final key = _history.keys.elementAt(index);
-          final value = _history[key] ?? 0;
-          return ListTile(
-            leading: CircleAvatar(child: Text(value.toString())),
-            title: Text(_formatDateKey(key)),
-            subtitle: Text('Completed: $value'),
-          );
-        },
-      ),
+              ? Center(
+                  child:
+                      Text('No history yet. Go to Today and start counting.'))
+              : ListView.builder(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  itemCount: _history.length,
+                  itemBuilder: (context, index) {
+                    final key = _history.keys.elementAt(index);
+                    final value = _history[key] ?? 0;
+                    return ListTile(
+                      leading: CircleAvatar(child: Text(value.toString())),
+                      title: Text(_formatDateKey(key)),
+                      subtitle: Text('Completed: $value'),
+                    );
+                  },
+                ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.refresh),
         backgroundColor: Theme.of(context).colorScheme.secondary,

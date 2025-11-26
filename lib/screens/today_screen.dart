@@ -3,6 +3,7 @@ import '../services/hadith_service.dart';
 import '../services/storage_service.dart';
 import '../models/hadith.dart';
 import '../widgets/adhkar_card.dart';
+import 'history_screen.dart';
 
 class TodayScreen extends StatefulWidget {
   @override
@@ -41,57 +42,72 @@ class _TodayScreenState extends State<TodayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white);
+    final titleStyle =
+        Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white);
     return Scaffold(
       appBar: AppBar(
         title: Text('Today', style: titleStyle),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.history),
+            tooltip: 'History',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => HistoryScreen()),
+              );
+            },
+          ),
+        ],
         centerTitle: true,
       ),
       body: _loading
           ? Center(child: CircularProgressIndicator())
           : RefreshIndicator(
-        onRefresh: _initialize,
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          padding: EdgeInsets.symmetric(vertical: 22),
-          child: Column(
-            children: [
-              if (_hadith != null)
-                AdhkarCard(
-                  arabic: _hadith!.arabic,
-                  translation: _hadith!.translation,
-                  initialCount: _count,
-                  onCountChanged: (val) => _onCountChanged(val),
-                ),
-              SizedBox(height: 12),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18.0),
-                child: Row(
+              onRefresh: _initialize,
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(vertical: 22),
+                child: Column(
                   children: [
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        icon: Icon(Icons.refresh),
-                        label: Text('Reset Today'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey[700],
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        ),
-                        onPressed: () async {
-                          await _storage.resetToday();
-                          final c = await _storage.getCountForDate(DateTime.now());
-                          setState(() => _count = c);
-                        },
+                    if (_hadith != null)
+                      AdhkarCard(
+                        arabic: _hadith!.arabic,
+                        translation: _hadith!.translation,
+                        initialCount: _count,
+                        onCountChanged: (val) => _onCountChanged(val),
+                      ),
+                    SizedBox(height: 12),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 18.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              icon: Icon(Icons.refresh),
+                              label: Text('Reset Today'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.grey[700],
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                              ),
+                              onPressed: () async {
+                                await _storage.resetToday();
+                                final c = await _storage
+                                    .getCountForDate(DateTime.now());
+                                setState(() => _count = c);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+                    SizedBox(height: 40),
+                    Text('Tip: Pull to refresh hadith',
+                        style: TextStyle(color: Colors.grey[600]))
                   ],
                 ),
               ),
-              SizedBox(height: 40),
-              Text('Tip: Pull to refresh hadith', style: TextStyle(color: Colors.grey[600]))
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

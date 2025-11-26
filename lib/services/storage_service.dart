@@ -1,9 +1,8 @@
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageService {
   static const _keyHistory = 'adhkar_history_v1';
-
-  get SharedPreferences => null;
 
   // History stored as map dateString -> int count
   Future<Map<String, int>> _loadAll() async {
@@ -67,7 +66,8 @@ class StorageService {
   Future<void> resetToday() async {
     final today = _dateKey(DateTime.now());
     final m = await _loadAll();
-    m[today] = 0;
+    // Remove today's entry so history doesn't keep a zero-value item.
+    m.remove(today);
     await _saveAll(m);
   }
 }

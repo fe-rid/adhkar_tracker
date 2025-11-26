@@ -78,11 +78,13 @@ class _AdhkarCardState extends State<AdhkarCard> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Completed', style: TextStyle(color: Colors.grey[600])),
+                    Text('Completed',
+                        style: TextStyle(color: Colors.grey[600])),
                     const SizedBox(height: 6),
                     Text(
                       '$_count',
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -105,10 +107,12 @@ class _AdhkarCardState extends State<AdhkarCard> {
                     onTap: _increment,
                     borderRadius: BorderRadius.circular(12),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 6),
                       child: const Text(
                         '+1',
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
