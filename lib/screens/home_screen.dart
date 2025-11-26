@@ -29,17 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       body: _pages[_selectedIndex],
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Floating action pressed')),
-          );
-        },
-        backgroundColor: Colors.green[200],
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-        child: Icon(Icons.refresh, color: Colors.black87),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      // Floating action button removed as requested
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
